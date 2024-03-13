@@ -1,5 +1,6 @@
 from extraction import fetch_data
 import pandas as pd 
+import numpy as np
 
 # REFRESHED DAILY
 
@@ -28,5 +29,12 @@ concatenated_occupancy['occupancy_rate'] = concatenated_occupancy['OCCUPANCY_RAT
 
 daily_mean_occupancy_rate = concatenated_occupancy['occupancy_rate'].resample('D').mean()
 concatenated_occupancy = daily_mean_occupancy_rate.to_frame(name='occupancy_rate')
+
+concatenated_occupancy['occupancy_rate_lag_day'] = concatenated_occupancy['occupancy_rate'].shift(1)
+concatenated_occupancy['occupancy_rate_lag_day'] = concatenated_occupancy['occupancy_rate_lag_day'].ffill()
+concatenated_occupancy['occupancy_rate_lag_day'] = concatenated_occupancy['occupancy_rate_lag_day'].bfill()
+concatenated_occupancy['occupancy_rate_lag_day'] = np.log(concatenated_occupancy['occupancy_rate_lag_day'])
+
+concatenated_occupancy = concatenated_occupancy.drop(columns  = ['occupancy_rate'])
 
 print(concatenated_occupancy)
