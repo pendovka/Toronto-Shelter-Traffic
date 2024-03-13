@@ -1,0 +1,11 @@
+pandas
+numpy
+requests
+seaborn
+matplotlib
+statsmodels
+scipy
+pmdarima
+scikit-learn
+lightgbm
+xgboost
