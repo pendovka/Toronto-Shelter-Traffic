@@ -16,19 +16,17 @@ occupancy2023['OCCUPANCY_DATE'] = pd.to_datetime(occupancy2023['OCCUPANCY_DATE']
 occupancy2024['OCCUPANCY_DATE'] = pd.to_datetime(occupancy2024['OCCUPANCY_DATE'])
 
 concatenated_occupancy = pd.concat([occupancy2024, occupancy2023, occupancy2022, occupancy2021])
+
 concatenated_occupancy['OCCUPANCY_DATE'] = pd.to_datetime(concatenated_occupancy['OCCUPANCY_DATE'])
 concatenated_occupancy.sort_values(by='OCCUPANCY_DATE', inplace=True)
 concatenated_occupancy.set_index('OCCUPANCY_DATE', inplace=True)
-
-for variable in ['CAPACITY_ACTUAL_ROOM', 'CAPACITY_ACTUAL_BED', 'OCCUPANCY_RATE_BEDS', 'OCCUPANCY_RATE_ROOMS']:
-    concatenated_occupancy[variable] = concatenated_occupancy[variable].fillna(0).astype(int)
-
-concatenated_occupancy['occupancy_rate'] = concatenated_occupancy['OCCUPANCY_RATE_BEDS'] + concatenated_occupancy['OCCUPANCY_RATE_ROOMS']
-concatenated_occupancy['capacity'] = concatenated_occupancy['CAPACITY_ACTUAL_ROOM'] + concatenated_occupancy['CAPACITY_ACTUAL_BED']
-
 concatenated_occupancy = concatenated_occupancy.rename_axis('Date')
 
+concatenated_occupancy.fillna(0, inplace=True)
+
+concatenated_occupancy['occupancy_rate'] = concatenated_occupancy['OCCUPANCY_RATE_BEDS'] + concatenated_occupancy['OCCUPANCY_RATE_ROOMS']
+
+daily_mean_occupancy_rate = concatenated_occupancy['occupancy_rate'].resample('D').mean()
+concatenated_occupancy = daily_mean_occupancy_rate.to_frame(name='occupancy_rate')
+
 print(concatenated_occupancy)
-
-
-

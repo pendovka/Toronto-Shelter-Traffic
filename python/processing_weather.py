@@ -2,7 +2,8 @@ import pandas as pd
 from io import StringIO
 import requests
 
-# URLs for CSV data
+# REFRESHED DAILY
+
 csv_urls = {
     '2023': 'https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51459&Year=2023&Month=3&Day=1&time=&timeframe=2&submit=Download+Data',
     '2022': 'https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51459&Year=2022&Month=3&Day=1&time=&timeframe=2&submit=Download+Data',
