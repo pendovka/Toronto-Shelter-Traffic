@@ -1,36 +1,73 @@
-import pandas as pd
-from io import StringIO
 import requests
+from datetime import datetime
+import json
+import os
 
-# REFRESHED DAILY
-
-csv_urls = {
-    '2023': 'https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51459&Year=2023&Month=3&Day=1&time=&timeframe=2&submit=Download+Data',
-    '2022': 'https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51459&Year=2022&Month=3&Day=1&time=&timeframe=2&submit=Download+Data',
-    '2021': 'https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51459&Year=2021&Month=3&Day=1&time=&timeframe=2&submit=Download+Data'
-}
-
-weather_data_frames = []
-
-for year, url in csv_urls.items():
-    response = requests.get(url)
-    if response.ok:
-        data = StringIO(response.text)
-        weather_df = pd.read_csv(data)
-        weather_df = weather_df.rename(columns={
-            'Date/Time': 'Date',
-            'Min Temp (°C)': 'min_temp_cels'
-        })
-        weather_df['Date'] = pd.to_datetime(weather_df['Date'])
-        weather_df.set_index('Date', inplace=True)
-        weather_df = weather_df[['min_temp_cels']]
-        weather_df['min_temp_cels'] = weather_df['min_temp_cels'].interpolate(method='linear')
-        
-        weather_data_frames.append(weather_df)
+def save_to_json(file_path, new_data):
+    # Load existing data or initialize an empty dictionary
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as file:
+            existing_data_list = json.load(file)
+        # Convert list of tuples to dictionary for easy update
+        existing_data = {date: temp for date, temp in existing_data_list}
     else:
-        print(f'Failed to retrieve data for {year}. Status code: {response.status_code}')
+        existing_data = {}
 
-concatenated_weather = pd.concat(weather_data_frames)
-concatenated_weather.sort_index(ascending=True, inplace=True)
+    # Update existing_data with new_data
+    for date, temp in new_data:
+        existing_data[date] = temp
 
-print(concatenated_weather)
+    # Convert the dictionary back to a list of tuples if necessary
+    updated_data_list = [(date, temp) for date, temp in existing_data.items()]
+
+    # Save updated data to JSON file
+    with open(file_path, 'w') as file:
+        json.dump(updated_data_list, file, indent=4)
+
+def get_daily_min_temperatures_for_toronto_in_2023(api_key, lat=43.65107, lon=-79.347015):
+    url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&appid={api_key}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        daily_temperatures = []
+        for daily_data in data['daily']:
+            # Manually convert temperature from Kelvin to Celsius
+            daily_temp = daily_data['temp']['min'] - 273.15
+            # Format the date from the timestamp
+            date = datetime.utcfromtimestamp(daily_data['dt']).strftime('%Y-%m-%d')
+            daily_temperatures.append((date, daily_temp))
+        return daily_temperatures
+    else:
+        print("Failed to retrieve data:", response.status_code)
+        return None
+
+api_key = '7d08c650b76cbb6f32017299ce1932e4'
+file_path = 'toronto_daily_min_temperatures_2023.json'
+toronto_daily_min_temperatures_2023 = get_daily_min_temperatures_for_toronto_in_2023(api_key)
+
+if toronto_daily_min_temperatures_2023:
+    save_to_json(file_path, toronto_daily_min_temperatures_2023)
+
+    print("Updated data stored in JSON file.")
+    with open(file_path, 'r') as file:
+        stored_data = json.load(file)
+    for date_temp in stored_data:
+        print(f"{date_temp[0]} {date_temp[1]:.2f}")
+
+
+
+
+
+
+2024-03-14 6.03
+2024-03-15 5.47
+2024-03-16 3.11
+2024-03-17 2.94
+2024-03-18 -0.77
+2024-03-19 -2.20
+2024-03-20 -0.05
+2024-03-21 3.03
+
+
+
+
