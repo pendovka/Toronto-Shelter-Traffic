@@ -58,7 +58,7 @@ if toronto_daily_min_temperatures_2023:
 
 
 
-
+past temp
 2024-03-14 6.03
 2024-03-15 5.47
 2024-03-16 3.11
@@ -67,6 +67,7 @@ if toronto_daily_min_temperatures_2023:
 2024-03-19 -2.20
 2024-03-20 -0.05
 2024-03-21 3.03
+
 
 
 
