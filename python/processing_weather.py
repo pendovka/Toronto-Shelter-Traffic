@@ -9,7 +9,7 @@ def get_weather():
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()
-        dataframe = {'Date': data['daily']['time'], 'temperature': data['daily']['temperature_2m_min']}
+        dataframe = {'Date': data['daily']['time'], 'min_temp_cels': data['daily']['temperature_2m_min']}
         dataframe = pd.DataFrame(dataframe)
         dataframe['Date'] = pd.to_datetime(dataframe['Date'])
         dataframe.set_index('Date', inplace=True)
@@ -17,6 +17,4 @@ def get_weather():
     else:
         print("Failed to retrieve data:", response.status_code)
         return None
-
-
 

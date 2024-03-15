@@ -40,3 +40,4 @@ def get_occupancy():
     occupancy = concatenated_occupancy.drop(columns  = ['occupancy_rate'])
     
     return occupancy
+

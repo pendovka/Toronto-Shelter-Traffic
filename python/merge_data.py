@@ -9,6 +9,5 @@ def merge():
     occupancy = get_occupancy()
     weather_calls= pd.merge(weather, calls, left_index=True, right_index=True, how='inner')
     weather_calls_occupancy= pd.merge(occupancy, weather_calls, left_index=True, right_index=True, how='inner')
+    weather_calls_occupancy = weather_calls_occupancy[weather_calls_occupancy.index.year >= 2024]
     return weather_calls_occupancy
-
-x = merge()
