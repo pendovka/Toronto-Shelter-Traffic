@@ -38,4 +38,5 @@ def get_occupancy():
     concatenated_occupancy['occupancy_rate_lag_day'] = np.log(concatenated_occupancy['occupancy_rate_lag_day'])
 
     occupancy = concatenated_occupancy.drop(columns  = ['occupancy_rate'])
+    
     return occupancy

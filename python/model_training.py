@@ -1,14 +1,18 @@
+from flask import Flask, request, jsonify
+from joblib import load
 
+app = Flask(__name__)
 
+# Load the model
+model = load('model_filename.joblib')
 
+@app.route('/predict', methods=['POST'])
+def predict():
+    data = request.get_json(force=True)
+    # Assuming 'data' is a dictionary with input features
+    prediction = model.predict([data['features']])
+    
+    return jsonify(prediction=prediction.tolist())
 
-
-
-
-model_sarimax = SARIMAX(weather_calls_occupancy_flow_daily.unmatched_callers,  
-                       exog = weather_calls_occupancy_flow_daily[current_features],
-                       order=(2, 1, 1), 
-                       seasonal_order=(1, 0, 1, 7))
-
-results_sarimax = model_sarimax.fit(disp=0)
-predictions_sarimax = results_sarimax.predict()
+if __name__ == '__main__':
+    app.run(debug=True)
