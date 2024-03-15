@@ -17,6 +17,3 @@ def get_calls():
     calls = calls.to_frame(name='unmatched_callers')
     calls = calls[calls.index.year >= 2021] 
     return calls
-
-x = get_calls()
-print(x)
