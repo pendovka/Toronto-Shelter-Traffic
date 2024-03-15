@@ -43,7 +43,7 @@ def plot_predictions():
 
     plt.figure(figsize=(15, 7))
     plt.plot(new_data.index, new_data['unmatched_callers'], label='Actual Unmatched Callers', color='blue', marker='o')
-    plt.plot(new_data.index[:len(x)], predictions_sarimax, label='Predicted Unmatched Callers', color='red', linestyle='--', marker='x')
+    plt.plot(new_data.index[:len(predictions_sarimax)], predictions_sarimax, label='Predicted Unmatched Callers', color='red', linestyle='--', marker='x')
 
     plt.title('Actual vs Predicted Unmatched Callers')
     plt.xlabel('Date')
@@ -59,3 +59,6 @@ def mae():
     predictions_sarimax = get_predictions()
 
     mean_absolute_error(new_data['unmatched_callers'][:len(predictions_sarimax)], predictions_sarimax)
+
+x=plot_predictions()
+print(x)
