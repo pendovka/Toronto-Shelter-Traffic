@@ -13,7 +13,7 @@ def mae_mean_baseline(new_data):
 
     mean_value = new_data['unmatched_callers'].mean()
     baseline_predictions = [mean_value] * len(new_data)
-    mae_baseline = mean_absolute_error(new_data['unmatched_callers'], baseline_predictions)
+    mae_baseline =  mean_absolute_error(new_data['unmatched_callers'], baseline_predictions)
     
     return mae_baseline
     
@@ -29,7 +29,7 @@ def mae_last_value_baseline(new_data_y, predictions_length):
 def mae_repeated_last_observation_baseline(new_data):
 
     actual_values = new_data['unmatched_callers']
-    baseline_predictions = actual_values.shift(1).fillna(method='bfill').tolist()
+    baseline_predictions = actual_values.shift(1).bfill().tolist()
     mae_baseline = mean_absolute_error(actual_values[1:], baseline_predictions[1:])
     
     return mae_baseline
@@ -45,5 +45,6 @@ def comparison():
     print(f"MAE for baseline prediction using mean: {mae_baseline.round(2)}")
     print(f"MAE for baseline prediction using last observation: {mae_last_observation.round(2)}")
     print(f"MAE for our model: {mae_sarimax.round(2)}")
+    print(f"MAE improvement: {(100*(mae_last_observation - mae_sarimax)/mae_last_observation).round(2)}%")
 
 comparison()

@@ -19,10 +19,9 @@ def get_predictions():
     for t in range(len(new_data)):
 
         model = SARIMAX(history_endog, exog=history_exog,
-                        order=(2, 1, 1),  
+                        order=(1, 1, 1),  
                         seasonal_order=(1, 0, 1, 7))
         model_fit = model.fit(disp = 0)
-
         next_exog = new_data_exog.iloc[t:t+1].values  
         output = model_fit.forecast(exog=next_exog)
         yhat = output[0]
