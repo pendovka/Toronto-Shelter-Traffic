@@ -42,8 +42,8 @@ def comparison():
     mae_baseline = mae_mean_baseline(new_data)
     mae_sarimax = mae(new_data)
 
-    print(f"MAE for baseline prediction using mean: {mae_baseline}")
-    print(f"MAE for baseline prediction using last observation: {mae_last_observation}")
-    print(f"MAE for our model: {mae_sarimax}")
+    print(f"MAE for baseline prediction using mean: {mae_baseline.round(2)}")
+    print(f"MAE for baseline prediction using last observation: {mae_last_observation.round(2)}")
+    print(f"MAE for our model: {mae_sarimax.round(2)}")
 
 comparison()
