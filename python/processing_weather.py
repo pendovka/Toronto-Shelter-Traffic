@@ -13,8 +13,11 @@ def get_weather():
         dataframe = pd.DataFrame(dataframe)
         dataframe['Date'] = pd.to_datetime(dataframe['Date'])
         dataframe.set_index('Date', inplace=True)
+
         return dataframe
+    
     else:
         print("Failed to retrieve data:", response.status_code)
+
         return None
 

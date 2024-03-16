@@ -22,6 +22,7 @@ def fetch_data(package_id, idx=None):
             data_response.raise_for_status()
             data = pd.read_csv(StringIO(data_response.text))
             return data
+        
     return None  
 
 

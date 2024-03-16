@@ -10,15 +10,11 @@ def get_occupancy():
 
     occupancy2024 = fetch_data(package_id_occupancy, 0)
     occupancy2023 = fetch_data(package_id_occupancy, 1)
-    occupancy2022 = fetch_data(package_id_occupancy, 2)
-    occupancy2021 = fetch_data(package_id_occupancy, 3)
 
-    occupancy2021['OCCUPANCY_DATE'] = pd.to_datetime(occupancy2021['OCCUPANCY_DATE'], format='%y-%m-%d').dt.strftime('%Y-%m-%d')
-    occupancy2022['OCCUPANCY_DATE'] = pd.to_datetime(occupancy2022['OCCUPANCY_DATE'], format='%y-%m-%d').dt.strftime('%Y-%m-%d')
     occupancy2023['OCCUPANCY_DATE'] = pd.to_datetime(occupancy2023['OCCUPANCY_DATE'])
     occupancy2024['OCCUPANCY_DATE'] = pd.to_datetime(occupancy2024['OCCUPANCY_DATE'])
 
-    concatenated_occupancy = pd.concat([occupancy2024, occupancy2023, occupancy2022, occupancy2021])
+    concatenated_occupancy = pd.concat([occupancy2024, occupancy2023])
     concatenated_occupancy['OCCUPANCY_DATE'] = pd.to_datetime(concatenated_occupancy['OCCUPANCY_DATE'])
 
     concatenated_occupancy.sort_values(by='OCCUPANCY_DATE', inplace=True)

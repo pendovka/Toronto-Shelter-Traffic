@@ -1,13 +1,11 @@
 from joblib import load
 from merge_data import merge
-from sklearn.metrics import mean_absolute_error
 import matplotlib.pyplot as plt
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 def get_predictions():
 
     new_data = merge()
-
     current_features = ['min_temp_cels', 'occupancy_rate_lag_day']
 
     new_data_y = new_data.unmatched_callers
@@ -53,12 +51,3 @@ def plot_predictions():
     plt.show()
 
 
-def mae():
-
-    new_data = merge()
-    predictions_sarimax = get_predictions()
-
-    mean_absolute_error(new_data['unmatched_callers'][:len(predictions_sarimax)], predictions_sarimax)
-
-x=plot_predictions()
-print(x)
