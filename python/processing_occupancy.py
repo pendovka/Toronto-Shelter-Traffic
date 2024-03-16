@@ -31,9 +31,9 @@ def get_occupancy():
     concatenated_occupancy['occupancy_rate_lag_day'] = concatenated_occupancy['occupancy_rate'].shift(1)
     concatenated_occupancy['occupancy_rate_lag_day'] = concatenated_occupancy['occupancy_rate_lag_day'].ffill()
     concatenated_occupancy['occupancy_rate_lag_day'] = concatenated_occupancy['occupancy_rate_lag_day'].bfill()
-    concatenated_occupancy['occupancy_rate_lag_day'] = np.log(concatenated_occupancy['occupancy_rate_lag_day'])
+
+    concatenated_occupancy['occupancy_rate_lag_day'] = np.log(concatenated_occupancy['occupancy_rate_lag_day']).round(2)
 
     occupancy = concatenated_occupancy.drop(columns  = ['occupancy_rate'])
     
     return occupancy
-

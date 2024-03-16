@@ -9,4 +9,3 @@ pmdarima
 scikit-learn
 lightgbm
 xgboost
-BeautifulSoup
