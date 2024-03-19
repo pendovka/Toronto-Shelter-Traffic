@@ -9,7 +9,7 @@ def fetch_data(package_id, idx=None):
     params = {"id": package_id}
     
     package_response = requests.get(package_url, params=params)
-    package_response.raise_for_status()  # Ensure we got a successful response
+    package_response.raise_for_status() 
     package = package_response.json()
     
     resources = package["result"]["resources"]
