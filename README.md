@@ -1,7 +1,7 @@
 ## Instructions
 
-Run model.py to see the plot of predicted vs. actual values
-  Run baseline_comparison.py to see how our model performed compared to primitive methods of forecasting
+* Run model.py to see the plot of predicted vs. actual values
+* Run baseline_comparison.py to see how our model performed compared to primitive methods of forecasting
 
 ## Data Used
 
