@@ -9,7 +9,7 @@ app = Flask(__name__)
 def save_plot():
     plt.figure(figsize=(15, 7))
     plot_predictions() 
-    plt.savefig('predictions.png')
+    plt.savefig('static/predictions.png')  # Save in static directory
     plt.close()
 
 # Initialize the scheduler with your preferred settings.
@@ -25,10 +25,10 @@ def index():
 @app.route('/predictions')
 def predictions():
     # Return the plot image file in the response
-    return send_file('predictions.png', mimetype='image/png')
+    return send_file('static/predictions.png', mimetype='image/png')
 
 if __name__ == '__main__':
-    # Make sure 'predictions.png' exists before the first request
-    if not os.path.isfile('predictions.png'):
+    if not os.path.isfile('static/predictions.png'):
         save_plot()
+    scheduler.start()  # Start the scheduler when running the app directly
     app.run(debug=True)
