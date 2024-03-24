@@ -7,30 +7,14 @@ from apscheduler.schedulers.background import BackgroundScheduler
 app = Flask(__name__)
 
 def save_plot():
-    # Print a message to indicate that the function is being called
-    print("Saving plot...")
-    
-    # Print the current working directory
+    print("save_plot() function called.")
     print("Current working directory:", os.getcwd())
     
     plt.figure(figsize=(15, 7))
     plot_predictions() 
-    
-    # Define the file path
-    file_path = 'static/predictions.png'
-    
-    # Print the absolute path where the file will be saved
-    absolute_path = os.path.abspath(file_path)
-    print("Absolute path where the file will be saved:", absolute_path)
-    
-    # Save the plot
-    plt.savefig(file_path)
-    
-    # Print a message to indicate that the plot has been saved
-    print("Plot saved successfully.")
-    
-    # Close the plot
+    plt.savefig('static/predictions.png')  # Save in static directory
     plt.close()
+    print("Plot saved to:", os.path.abspath('static/predictions.png'))
 
 # Initialize the scheduler with your preferred settings.
 scheduler = BackgroundScheduler()
