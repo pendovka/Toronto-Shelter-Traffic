@@ -48,4 +48,5 @@ def comparison():
     print(f"MAE improvement: {(100*(mae_last_observation - mae_sarimax)/mae_last_observation).round(2)}%")
 
 
-comparison()
+if __name__ == '__main__':
+    comparison()

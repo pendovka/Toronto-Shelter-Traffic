@@ -50,4 +50,5 @@ def plot_predictions():
     plt.grid(True)
     plt.show()
 
-plot_predictions()
+if __name__ == '__main__':
+    plot_predictions()
