@@ -10,8 +10,8 @@ i = 0
 
 @app.route('/')
 def index():
-    
+
     i +=  1
 
-    return i
+    return str(i)
 
