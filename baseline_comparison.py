@@ -45,7 +45,7 @@ def comparison():
     print(f"MAE for baseline prediction using mean: {mae_baseline.round(2)}")
     print(f"MAE for baseline prediction using last observation: {mae_last_observation.round(2)}")
     print(f"MAE for our model: {mae_sarimax.round(2)}")
-    print(f"MAE improvement: {(100*(mae_last_observation - mae_sarimax)/mae_last_observation).round(2)}%")
+    print(f"MAE improvement: {100 * (min(mae_last_observation, mae_baseline) - mae_sarimax) / min(mae_last_observation, mae_baseline):.2f}%")
 
 
 if __name__ == '__main__':

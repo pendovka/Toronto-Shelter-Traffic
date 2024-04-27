@@ -7,8 +7,8 @@ app = Flask(__name__)
 
 celery = Celery(
     __name__,
-    broker="redis://127.0.0.1:6379/0",
-    backend="redis://127.0.0.1:6379/0"
+    broker="redis://default:7wgrTMvbWOwZkFoMPXL3wqFqZw5GHDoX@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429",
+    backend="redis://default:7wgrTMvbWOwZkFoMPXL3wqFqZw5GHDoX@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429"
 )
 
 @app.route('/')
