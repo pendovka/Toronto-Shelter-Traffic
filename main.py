@@ -34,7 +34,6 @@ def check_task(task_id):
             'result': task.result
         }
     else:
-        # something went wrong in the background job
         response = {
             'state': task.state,
         }
