@@ -10,8 +10,8 @@ app = Flask(__name__)
 
 celery = Celery(
     __name__,
-    broker=f"redis://default:{password}X@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429",
-    backend=f"redis://default:{password}X@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429"
+    broker=f"redis://default:{password}@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429",
+    backend=f"redis://default:{password}@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429"
 )
 
 r = Redis(
