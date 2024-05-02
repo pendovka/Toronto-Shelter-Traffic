@@ -1,15 +1,23 @@
 from flask import Flask, jsonify
 from celery import Celery
 from model import get_predictions
+from redis import Redis 
+import os
 
+password = os.environ['REDIS_PASSWORD']
 
 app = Flask(__name__)
 
 celery = Celery(
     __name__,
-    broker="redis://default:7wgrTMvbWOwZkFoMPXL3wqFqZw5GHDoX@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429",
-    backend="redis://default:7wgrTMvbWOwZkFoMPXL3wqFqZw5GHDoX@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429"
+    broker=f"redis://default:{password}X@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429",
+    backend=f"redis://default:{password}X@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429"
 )
+
+r = Redis(
+  host='redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com',
+  port=15429,
+  password=password)
 
 @app.route('/')
 def index():
@@ -41,5 +49,14 @@ def check_task(task_id):
 
 @app.route('/start_task')
 def start_task():
-    task = print_predictions.delay()  
+
+    current_task_id = r.get("current_task_id")
+    print('hey')
+    print(current_task_id)
+    if current_task_id:
+        return jsonify({'task_id': current_task_id.decode("utf-8")}), 200
+
+    task = print_predictions.delay()
+    r.set("current_task_id", task.id)
+
     return jsonify({'task_id': task.id}), 202  # 202 Accepted status code
