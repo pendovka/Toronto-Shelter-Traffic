@@ -83,6 +83,7 @@ def route_get_predictions():
                 'state': task.state,
                 'result': task.result
             }
+            r.delete("current_task_id")
         else:
             response = {
                 'state': task.state,
