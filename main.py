@@ -25,7 +25,8 @@ def index():
 
 
 @celery.task
-def print_predictions():
+def print_predictions(self):
+    self.update_state(state='STARTED')
     return get_predictions()
 
 @app.route('/check_task/<task_id>')
