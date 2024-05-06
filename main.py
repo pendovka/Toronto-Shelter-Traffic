@@ -24,7 +24,7 @@ def index():
     return 'hi'
 
 
-@celery.task
+@celery.task(bind=True)
 def print_predictions(self):
     self.update_state(state='STARTED')
     return get_predictions()
