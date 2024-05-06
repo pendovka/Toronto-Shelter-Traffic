@@ -15,6 +15,7 @@ def get_predictions():
     history_exog = load('old_exog.joblib')
 
     predictions_sarimax = []
+    actual_values = []
 
     for t in range(len(new_data)):
 
@@ -29,9 +30,16 @@ def get_predictions():
         predictions_sarimax.append(yhat)
         obs = new_data_y.iloc[t]
         history_endog.append(obs)
+        actual_values.append(obs)  
         history_exog.append(next_exog[0].tolist())  
 
-    return predictions_sarimax
+    return {
+        'predictions': predictions_sarimax,
+        'actual_values': actual_values,
+        'dates': new_data.index[:len(predictions_sarimax)],
+
+    }
+
 
 
 def plot_predictions():
