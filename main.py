@@ -60,3 +60,35 @@ def start_task():
     r.set("current_task_id", task.id)
 
     return jsonify({'task_id': task.id}), 202  # 202 Accepted status code
+
+
+@app.route('/get_predictions')
+def route_get_predictions():
+
+    current_task_id = r.get("current_task_id")
+    if not current_task_id:
+        task = print_predictions.delay()
+        r.set("current_task_id", task.id)
+        return jsonify({
+            'state': task.state,
+            'status': 'Pending...'
+            }), 202
+    else:
+        task = print_predictions.AsyncResult(current_task_id)
+        if task.state == 'PENDING':
+            response = {
+                'state': task.state,
+                'status': 'Pending...'
+            }
+        elif task.state != 'FAILURE':
+            response = {
+                'state': task.state,
+                'result': task.result
+            }
+        else:
+            response = {
+                'state': task.state,
+            }
+            
+        return jsonify(response), 200
+    
