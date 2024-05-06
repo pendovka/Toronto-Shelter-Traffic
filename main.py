@@ -37,6 +37,11 @@ def check_task(task_id):
             'state': task.state,
             'status': 'Pending...'
         }
+    elif task.state == 'STARTED':
+        response = {
+            'state': task.state,
+            'result': task.result
+        }
     elif task.state != 'FAILURE':
         response = {
             'state': task.state,
