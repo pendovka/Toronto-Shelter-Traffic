@@ -69,7 +69,6 @@ def route_get_predictions():
         r.set("current_task_id", task.id)
         r.expire("current_task_id", 600)
         return jsonify({
-            'state': task.state,
             'status': 'Accepted'
             }), 202
     else:
