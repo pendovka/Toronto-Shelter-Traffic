@@ -71,7 +71,7 @@ def route_get_predictions():
         r.set("current_task_id", task.id)
         return jsonify({
             'state': task.state,
-            'status': 'Pending...'
+            'status': 'Accepted'
             }), 202
     else:
         task = print_predictions.AsyncResult(current_task_id)
@@ -89,6 +89,6 @@ def route_get_predictions():
             response = {
                 'state': task.state,
             }
-            
+
         return jsonify(response), 200
     
