@@ -13,6 +13,7 @@ celery = Celery(
     broker=f"redis://default:{password}@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429",
     backend=f"redis://default:{password}@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429"
 )
+celery.conf.update(task_track_started=True)
 
 r = Redis(
   host='redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com',
@@ -23,10 +24,8 @@ r = Redis(
 def index():
     return 'hi'
 
-
-@celery.task(bind=True)
-def print_predictions(self):
-    self.update_state(state='STARTED')
+@celery.task
+def print_predictions():
     return get_predictions()
 
 @app.route('/check_task/<task_id>')
