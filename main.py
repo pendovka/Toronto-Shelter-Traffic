@@ -51,14 +51,7 @@ def check_task(task_id):
 @app.route('/start_task')
 def start_task():
 
-    current_task_id = r.get("current_task_id")
-    print('hey')
-    print(current_task_id)
-    if current_task_id:
-        return jsonify({'task_id': current_task_id.decode("utf-8")}), 200
-
     task = print_predictions.delay()
-    r.set("current_task_id", task.id)
 
     return jsonify({'task_id': task.id}), 202  # 202 Accepted status code
 
