@@ -26,17 +26,21 @@ def get_predictions():
         model_fit = model.fit(disp = 0)
         next_exog = new_data_exog.iloc[t:t+1].values  
         output = model_fit.forecast(exog=next_exog)
-        yhat = round(output[0],2)
+        yhat = round(float(output[0]), 2)
         predictions_sarimax.append(yhat)
-        obs = new_data_y.iloc[t]
+        obs = int(new_data_y.iloc[t])
         history_endog.append(obs)
         actual_values.append(obs)  
         history_exog.append(next_exog[0].tolist())  
 
+    date_strings = new_data.index[:len(predictions_sarimax)].strftime('%Y-%m-%d').tolist()
+
+    
+
     return {
         'predictions': predictions_sarimax,
         'actual_values': actual_values,
-        'dates': new_data.index[:len(predictions_sarimax)],
+        'dates': date_strings,
 
     }
 
