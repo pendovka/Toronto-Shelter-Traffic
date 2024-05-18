@@ -28,7 +28,8 @@ def index():
 
 @celery.task
 def print_predictions():
-    return get_predictions()
+    predictions = get_predictions()
+    print(predictions)
 
 
 @app.route('/get_predictions')
@@ -66,6 +67,5 @@ def route_get_predictions():
             }
             status = 200
         
-
         return jsonify(response), status
     
