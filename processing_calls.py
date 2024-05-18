@@ -1,7 +1,7 @@
 from extraction import fetch_data
 import pandas as pd 
 
-# REFRESHED MONTHLY. Data last refreshed: Feb 16, 2024. Latest Record: Jan 31st.
+# REFRESHED MONTHLY
 
 def get_calls():
     package_id_calls = "central-intake-calls"
