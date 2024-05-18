@@ -8,7 +8,7 @@ import os
 password = os.environ['REDIS_PASSWORD']
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, send_wildcard=True)
 
 celery = Celery(
     __name__,
