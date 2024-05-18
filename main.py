@@ -80,16 +80,19 @@ def route_get_predictions():
                 'state': task.state,
                 'status': 'Pending...'
             }
+            status = 202
         elif task.state != 'FAILURE':
             response = {
                 'state': task.state,
                 'result': task.result
             }
+            status = 200
         else:
             response = {
                 'state': task.state,
             }
             r.delete("current_task_id")
+            status = 500
 
-        return jsonify(response), 200
+        return jsonify(response), status
     
