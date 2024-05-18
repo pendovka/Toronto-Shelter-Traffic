@@ -3,7 +3,7 @@ from merge_data import merge
 import matplotlib.pyplot as plt
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
-def get_predictions():
+def model():
 
     new_data = merge()
     current_features = ['min_temp_cels', 'occupancy_rate_lag_day']
@@ -36,12 +36,10 @@ def get_predictions():
     date_strings = new_data.index[:len(predictions_sarimax)].strftime('%Y-%m-%d').tolist()
 
     
-
     return {
         'predictions': predictions_sarimax,
         'actual_values': actual_values,
         'dates': date_strings,
-
     }
 
 
@@ -49,7 +47,7 @@ def get_predictions():
 def plot_predictions():
 
     new_data = merge()
-    predictions_sarimax = get_predictions()['predictions']
+    predictions_sarimax = model()['predictions']
 
     plt.figure(figsize=(15, 7))
     plt.plot(new_data.index, new_data['unmatched_callers'], label='Actual Unmatched Callers', color='blue', marker='o')
@@ -63,5 +61,4 @@ def plot_predictions():
     plt.show()
 
 if __name__ == '__main__':
-    #print(get_predictions())
     plot_predictions()

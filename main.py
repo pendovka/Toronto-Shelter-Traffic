@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from celery import Celery
-from model import get_predictions
+from output import get_predictions
 from redis import Redis 
 import os
 
