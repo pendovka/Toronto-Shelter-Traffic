@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 from celery import Celery
 from model import get_predictions
 from redis import Redis 
@@ -7,6 +8,7 @@ import os
 password = os.environ['REDIS_PASSWORD']
 
 app = Flask(__name__)
+CORS(app)
 
 celery = Celery(
     __name__,
