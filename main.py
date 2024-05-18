@@ -30,37 +30,6 @@ def index():
 def print_predictions():
     return get_predictions()
 
-@app.route('/check_task/<task_id>')
-def check_task(task_id):
-    task = print_predictions.AsyncResult(task_id)
-    if task.state == 'PENDING':
-        response = {
-            'state': task.state,
-            'status': 'Pending...'
-        }
-    elif task.state == 'STARTED':
-        response = {
-            'state': task.state,
-            'result': task.result
-        }
-    elif task.state != 'FAILURE':
-        response = {
-            'state': task.state,
-            'result': task.result
-        }
-    else:
-        response = {
-            'state': task.state,
-        }
-    return jsonify(response)
-
-@app.route('/start_task')
-def start_task():
-
-    task = print_predictions.delay()
-
-    return jsonify({'task_id': task.id}), 202  # 202 Accepted status code
-
 
 @app.route('/get_predictions')
 def route_get_predictions():
@@ -75,24 +44,28 @@ def route_get_predictions():
             }), 202
     else:
         task = print_predictions.AsyncResult(current_task_id)
-        if task.state == 'PENDING':
+        if task.state == 'PENDING' or task.state == 'STARTED':
             response = {
                 'state': task.state,
                 'status': 'Pending...'
             }
             status = 202
-        elif task.state != 'FAILURE':
+
+        elif task.state == 'FAILURE':
+            response = {
+                'state': task.state,
+                'result': task.result
+            }
+            r.delete("current_task_id")
+            status = 500
+
+        elif task.state == 'SUCCESS':
             response = {
                 'state': task.state,
                 'result': task.result
             }
             status = 200
-        else:
-            response = {
-                'state': task.state,
-            }
-            r.delete("current_task_id")
-            status = 500
+        
 
         return jsonify(response), status
     
