@@ -20,7 +20,7 @@ def get_predictions():
     for t in range(len(new_data)):
 
         model = SARIMAX(history_endog, exog=history_exog,
-                        order=(1, 1, 1),  
+                        order=(2, 1, 1),  
                         seasonal_order=(1, 0, 1, 7))
         
         model_fit = model.fit(disp = 0)

@@ -24,10 +24,11 @@ def comparison():
     mae_last_observation = mae_repeated_last_observation_baseline(new_data)
     mae_sarimax = mae(new_data)
 
-    print(f"MAE for baseline prediction using last observation: {mae_last_observation.round(2)}")
+    print(f"MAE for forecasting based on the last observation: {mae_last_observation.round(2)}")
     print(f"MAE  for our model: {mae_sarimax.round(2)}")
     print(f"MAE improvement: {100 * (mae_last_observation - mae_sarimax) / mae_last_observation:.2f}%")
 
 
 if __name__ == '__main__':
     comparison()
+    
