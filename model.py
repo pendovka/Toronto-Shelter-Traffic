@@ -32,7 +32,9 @@ def get_results():
         obs = int(new_data_y.iloc[t])
         history_endog.append(obs)
         actual_values.append(obs)  
-        history_exog.append(next_exog[0].tolist())  
+        history_exog.append(next_exog[0].tolist()) 
+
+        print(f'*** CALCULATED {t+1}/{len(new_data)} ROWS ***') 
 
     date_strings = new_data.index[:len(predictions_sarimax)].strftime('%Y-%m-%d').tolist()
 

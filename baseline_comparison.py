@@ -6,7 +6,6 @@ def mae(new_data, predictions_sarimax):
 
     return mean_absolute_error(new_data['unmatched_callers'][:len(predictions_sarimax)], predictions_sarimax)
 
-
 def mae_repeated_last_observation_baseline(new_data):
 
     actual_values = new_data['unmatched_callers']
