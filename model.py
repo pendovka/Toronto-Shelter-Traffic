@@ -47,7 +47,7 @@ def get_results():
 def plot_predictions():
 
     new_data = merge()
-    predictions_sarimax = model()['predictions']
+    predictions_sarimax = get_results()['predictions']
 
     plt.figure(figsize=(15, 7))
     plt.plot(new_data.index, new_data['unmatched_callers'], label='Actual Unmatched Callers', color='blue', marker='o')
