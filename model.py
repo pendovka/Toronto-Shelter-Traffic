@@ -3,7 +3,7 @@ from merge_data import merge
 import matplotlib.pyplot as plt
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
-def model():
+def get_results():
 
     new_data = merge()
     current_features = ['min_temp_cels', 'occupancy_rate_lag_day']

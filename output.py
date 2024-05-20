@@ -1,21 +1,15 @@
-from model import model
+from model import get_results
 from baseline_comparison import mae_comparison
 
 def get_predictions():
 
-    predictions = model()['predictions']
-    actual_values = model()['actual_values']
-    dates = model()['dates']
-    comparison = mae_comparison()['mae_result']
-
-
     return {
-        'predictions': predictions,
-        'actual_values': actual_values,
-        'dates': dates,
-        'comparison' : comparison
+        'predictions': result['predictions'],
+        'actual_values': result['actual_values'],
+        'dates': result['dates'],
+        'comparison' : mae_comparison()['mae_result']
     }
 
 if __name__ == '__main__':
-    x = get_predictions()['comparison']
-    print(x)
+    result = get_predictions()
+    print(result)
