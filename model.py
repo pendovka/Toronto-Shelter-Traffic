@@ -42,8 +42,7 @@ def get_results():
         'dates': date_strings,
     }
 
-
-
+#
 def plot_predictions():
 
     new_data = merge()

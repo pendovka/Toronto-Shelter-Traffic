@@ -9,9 +9,11 @@ def get_predictions():
         'predictions': result['predictions'],
         'actual_values': result['actual_values'],
         'dates': result['dates'],
-        'comparison' : mae_comparison()['mae_result']
+        'comparison' : mae_comparison(result)['mae_result']
     }
 
 if __name__ == '__main__':
     returned = get_predictions()
     print(returned)
+
+    
