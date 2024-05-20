@@ -1,11 +1,12 @@
 from joblib import load
-from merge_data import merge
+from merge_data import get_new_data
 import matplotlib.pyplot as plt
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 def get_results():
 
-    new_data = merge()
+    new_data = get_new_data()
+
     current_features = ['min_temp_cels', 'occupancy_rate_lag_day']
 
     new_data_y = new_data.unmatched_callers
@@ -40,24 +41,6 @@ def get_results():
         'predictions': predictions_sarimax,
         'actual_values': actual_values,
         'dates': date_strings,
+        'new_data': new_data
     }
 
-#
-def plot_predictions():
-
-    new_data = merge()
-    predictions_sarimax = get_results()['predictions']
-
-    plt.figure(figsize=(15, 7))
-    plt.plot(new_data.index, new_data['unmatched_callers'], label='Actual Unmatched Callers', color='blue', marker='o')
-    plt.plot(new_data.index[:len(predictions_sarimax)], predictions_sarimax, label='Predicted Unmatched Callers', color='red', linestyle='--', marker='x')
-
-    plt.title('Actual vs Predicted Unmatched Callers')
-    plt.xlabel('Date')
-    plt.ylabel('Unmatched Callers')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
-
-if __name__ == '__main__':
-    plot_predictions()

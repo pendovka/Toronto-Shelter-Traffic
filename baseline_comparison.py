@@ -1,4 +1,4 @@
-from merge_data import merge
+from merge_data import get_new_data
 from sklearn.metrics import mean_absolute_error
 from model import get_results
 
@@ -15,9 +15,7 @@ def mae_repeated_last_observation_baseline(new_data):
     
     return mae_baseline
 
-def mae_comparison(predictions_sarimax):
-
-    new_data = merge()
+def mae_comparison(new_data, predictions_sarimax):
 
     mae_last_observation = mae_repeated_last_observation_baseline(new_data).round(2)
     mae_sarimax = mae(new_data, predictions_sarimax).round(2)
@@ -30,6 +28,8 @@ def mae_comparison(predictions_sarimax):
     return {'mae_result': mae_result}
 
 if __name__ == '__main__':
-    x = mae_comparison(predictions_sarimax)['mae_result']['mae_comparison']
+    x = mae_comparison(get_results()['predictions'])['mae_result']['mae_comparison']
     print(x)
+    
+
     
