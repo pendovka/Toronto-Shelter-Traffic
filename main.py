@@ -29,7 +29,7 @@ def index():
 @celery.task
 def print_predictions():
     predictions = get_predictions()
-    print(predictions)
+    return predictions 
 
 
 @app.route('/get_predictions')
