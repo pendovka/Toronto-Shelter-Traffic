@@ -3,6 +3,8 @@ from baseline_comparison import mae_comparison
 
 def get_predictions():
 
+    result = get_results()
+
     return {
         'predictions': result['predictions'],
         'actual_values': result['actual_values'],
@@ -11,5 +13,5 @@ def get_predictions():
     }
 
 if __name__ == '__main__':
-    result = get_predictions()
-    print(result)
+    returned = get_predictions()
+    print(returned)
