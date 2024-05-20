@@ -26,13 +26,13 @@ r = Redis(
 def index():
     return 'hi'
 
-@celery.task
+@celery.task     
 def print_predictions():
     predictions = get_predictions()
     return predictions 
 
 
-@app.route('/get_predictions')
+@app.route('/get_predictions')  
 def route_get_predictions():
 
     current_task_id = r.get("current_task_id")
