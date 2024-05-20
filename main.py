@@ -39,7 +39,7 @@ def route_get_predictions():
     if not current_task_id:
         task = print_predictions.delay()
         r.set("current_task_id", task.id)
-        r.expire("current_task_id", 600)
+        r.expire("current_task_id", 2*60*60) # 2 hours
         return jsonify({
             'status': 'Accepted'
             }), 202
