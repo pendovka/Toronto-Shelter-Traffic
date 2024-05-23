@@ -40,7 +40,7 @@ def route_get_predictions():
     if not current_task_id:
         task = print_predictions.delay()
         r.set("current_task_id", task.id)
-        r.expire("current_task_id", 10*60) # 10 minutes
+        r.expire("current_task_id", 24*60*60) # 1 day
 
     current_task = print_predictions.AsyncResult(r.get('current_task_id'))
 
