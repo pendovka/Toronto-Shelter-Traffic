@@ -36,36 +36,32 @@ def print_predictions():
 def route_get_predictions():
 
     current_task_id = r.get("current_task_id")
+    
     if not current_task_id:
         task = print_predictions.delay()
         r.set("current_task_id", task.id)
-        r.expire("current_task_id", 2*60*60) # 2 hours
-        return jsonify({
-            'status': 'Accepted'
-            }), 202
-    else:
-        task = print_predictions.AsyncResult(current_task_id)
-        if task.state == 'PENDING' or task.state == 'STARTED':
-            response = {
-                'state': task.state,
-                'status': 'Pending...'
-            }
-            status = 202
+        r.expire("current_task_id", 10*60) # 10 minutes
 
-        elif task.state == 'FAILURE':
-            response = {
-                'state': task.state,
-                'result': task.result
-            }
-            r.delete("current_task_id")
-            status = 500
+    current_task = print_predictions.AsyncResult(r.get('current_task_id'))
 
-        elif task.state == 'SUCCESS':
-            response = {
-                'state': task.state,
-                'result': task.result
-            }
-            status = 200
+    if current_task.state == 'SUCCESS':
+        r.set('last_completed_task_id', current_task.id)
+
+    elif current_task.state == 'FAILURE':
+        r.delete("current_task_id")
+        return jsonify({'result': None}), 500
         
-        return jsonify(response), status
-    
+    last_completed_task_id = r.get("last_completed_task_id")
+
+    if last_completed_task_id:
+        task = print_predictions.AsyncResult(last_completed_task_id)
+
+        if task.status == 'SUCCESS':
+            return jsonify({
+                'result': task.result
+            }), 200
+            
+    return jsonify({'result': None}), 202
+
+
+
