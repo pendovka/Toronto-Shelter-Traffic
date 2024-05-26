@@ -16,9 +16,9 @@ def mae_repeated_last_observation_baseline(new_data):
 
 def mae_comparison(new_data, predictions_sarimax):
 
-    mae_last_observation = mae_repeated_last_observation_baseline(new_data).round(2)
-    mae_sarimax = mae(new_data, predictions_sarimax).round(2)
-    mae_comparison = (100 * (mae_last_observation - mae_sarimax) / mae_last_observation).round(2)
+    mae_last_observation = mae_repeated_last_observation_baseline(new_data).round(1)
+    mae_sarimax = mae(new_data, predictions_sarimax).round(1)
+    mae_comparison = (100 * (mae_last_observation - mae_sarimax) / mae_last_observation).round(1)
 
     mae_result = {'mae_last_observation': mae_last_observation,
                   'mae_sarimax': mae_sarimax,
