@@ -38,7 +38,7 @@ def route_get_predictions():
     current_task_id = r.get("current_task_id")
     
     if not current_task_id:
-        task = print_predictions.apply_async(None, expires=60*60*24*2) # 2
+        task = print_predictions.apply_async(None, expires=60*60*24*2) # 2 days
         r.set("current_task_id", task.id)
         r.expire("current_task_id", 24*60*60) # 1 day
 
@@ -58,7 +58,8 @@ def route_get_predictions():
 
         if task.status == 'SUCCESS':
             return jsonify({
-                'result': task.result
+                'result': task.result,
+                'completed_on': task.result._cache['date_done']
             }), 200
             
     return jsonify({'result': None}), 202
