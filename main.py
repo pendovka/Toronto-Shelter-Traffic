@@ -59,7 +59,7 @@ def route_get_predictions():
         if task.status == 'SUCCESS':
             return jsonify({
                 'result': task.result,
-                'completed_on': task.result._cache['date_done']
+                'completed_on': task.result['date_done']
             }), 200
             
     return jsonify({'result': None}), 202
