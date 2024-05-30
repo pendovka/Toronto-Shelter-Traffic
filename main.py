@@ -62,7 +62,7 @@ def route_get_predictions():
                 'completed_on': task.date_done  
             }), 200
             
-    return jsonify({'result': None}), 202
+    return jsonify({'result': None, 'status': 'PENDING'}), 202
 
 
 
