@@ -21,7 +21,7 @@ celery.conf.update(
     task_track_started=True,
     beat_schedule={
         'schedule_print_predictions': {  # Name of the periodic task
-            'task': 'your_application_name.print_predictions',  # Ensure this name matches the name of the task decorator
+            'task': 'main.print_predictions',  # Ensure this name matches the name of the task decorator
             'schedule': crontab(hour='*/12'),  # Schedule task to run every 12 hours
         },
     }
