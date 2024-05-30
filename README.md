@@ -1,6 +1,6 @@
 ## Instructions
 
-To see the graph that compares predicted vs actual values, see the [website](https://demand-predictor.netlify.app/).
+To see the chart that compares predicted vs actual values, see the [website](https://demand-predictor.netlify.app/).
 
 ## Data Used
 
