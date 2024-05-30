@@ -1,7 +1,7 @@
 ## Instructions
 
-* Run model.py to see the plot of predicted vs. actual values
-* Run baseline_comparison.py to see how our model performed compared to primitive methods of forecasting
+To see the graph that compares predicted vs actual values, see the [website](https://demand-predictor.netlify.app/). 
+https://demand-predictor.netlify.app/
 
 ## Data Used
 
