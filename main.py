@@ -44,10 +44,10 @@ def route_get_predictions():
 
     current_task = print_predictions.AsyncResult(r.get('current_task_id'))
 
-    if current_task.state == 'SUCCESS':
+    if current_task.status == 'SUCCESS':
         r.set('last_completed_task_id', current_task.id)
 
-    elif current_task.state == 'FAILURE':
+    elif current_task.status == 'FAILURE':
         r.delete("current_task_id")
         return jsonify({'result': None}), 500
         
