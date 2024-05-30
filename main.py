@@ -1,9 +1,11 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from celery import Celery
+from celery.schedules import crontab
 from output import get_predictions
 from redis import Redis 
 import os
+
 
 password = os.environ['REDIS_PASSWORD']
 
@@ -15,8 +17,15 @@ celery = Celery(
     broker=f"redis://default:{password}@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429",
     backend=f"redis://default:{password}@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429"
 )
-celery.conf.update(task_track_started=True)
-
+celery.conf.update(
+    task_track_started=True,
+    beat_schedule={
+        'schedule_print_predictions': {  # Name of the periodic task
+            'task': 'your_application_name.print_predictions',  # Ensure this name matches the name of the task decorator
+            'schedule': crontab(hour='*/12'),  # Schedule task to run every 12 hours
+        },
+    }
+)
 r = Redis(
   host='redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com',
   port=15429,
