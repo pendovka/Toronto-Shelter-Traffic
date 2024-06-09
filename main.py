@@ -56,7 +56,7 @@ def route_get_predictions():
     current_task = get_predictions_task.AsyncResult(current_task_id)
 
     if current_task.status == 'SUCCESS':
-        r.set('last_completed_task_result', current_task.result)
+        r.set('last_completed_task_result', jsonify(current_task.result))
         r.set('last_completed_task_date', current_task.date_done)
 
     elif current_task.status == 'FAILURE':
