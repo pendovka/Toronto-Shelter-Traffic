@@ -1,3 +1,4 @@
+import json
 from flask import Flask, jsonify
 from flask_cors import CORS
 from celery import Celery
@@ -67,8 +68,8 @@ def route_get_predictions():
 
     if last_completed_task_result:
 
-        return jsonify({
-            'result': last_completed_task_result,
+        return jsonify({ 
+            'result': json.loads(last_completed_task_result),
             'completed_on': r.get("last_completed_task_date") 
         }), 200
             
