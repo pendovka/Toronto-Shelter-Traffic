@@ -69,8 +69,8 @@ def route_get_predictions():
     if last_completed_task_result:
 
         return jsonify({ 
-            'result': json.loads(last_completed_task_result),
-            'completed_on': r.get("last_completed_task_date") 
+            'result': json.loads(last_completed_task_result.decode('utf-8')),
+            'completed_on': float(r.get("last_completed_task_date"))
         }), 200
             
     return jsonify({'result': None, 'status': 'PENDING'}), 202
