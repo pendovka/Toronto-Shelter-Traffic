@@ -23,7 +23,7 @@ celery.conf.update(
     beat_schedule={
         'schedule_print_predictions': {  # Name of the periodic task
             'task': 'main.print_predictions',
-            'schedule': 60*10,  
+            'schedule': 60*60*12,  # Every 12 hours
         },
     }
 )
