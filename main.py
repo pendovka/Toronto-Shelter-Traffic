@@ -58,7 +58,7 @@ def route_get_predictions():
 
     if current_task.status == 'SUCCESS':
         r.set('last_completed_task_result', json.dumps(current_task.result))
-        r.set('last_completed_task_date', json.dumps(current_task.date_done))
+        r.set('last_completed_task_date', current_task.date_done.timestamp())
 
     elif current_task.status == 'FAILURE':
         r.delete("current_task_id")
