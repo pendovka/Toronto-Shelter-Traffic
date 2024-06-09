@@ -14,21 +14,23 @@ CORS(app, send_wildcard=True)
 
 celery = Celery(
     __name__,
-    broker=f"redis://default:{password}@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429",
-    backend=f"redis://default:{password}@redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com:15429"
+    broker=f"redis://default:{password}@redis-11824.c325.us-east-1-4.ec2.redns.redis-cloud.com:11824",
+    backend=f"redis://default:{password}@redis-11824.c325.us-east-1-4.ec2.redns.redis-cloud.com:11824"
 )
+
 celery.conf.update(
     task_track_started=True,
     beat_schedule={
         'schedule_print_predictions': {  # Name of the periodic task
-            'task': 'main.print_predictions',  # Ensure this name matches the name of the task decorator
+            'task': 'main.print_predictions',  
             'schedule': crontab(hour='*/12'),  # Schedule task to run every 12 hours
         },
     }
 )
+
 r = Redis(
-  host='redis-15429.c11.us-east-1-2.ec2.redns.redis-cloud.com',
-  port=15429,
+  host='redis-11824.c325.us-east-1-4.ec2.redns.redis-cloud.com', 
+  port=11824,
   password=password)
 
 @app.route('/')

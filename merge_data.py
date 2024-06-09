@@ -13,3 +13,7 @@ def get_new_data():
     weather_calls_occupancy = weather_calls_occupancy[weather_calls_occupancy.index.year >= 2024]
     
     return weather_calls_occupancy
+
+if __name__ == '__main__':
+    x = get_new_data()
+    print(x)

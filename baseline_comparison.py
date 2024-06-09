@@ -9,7 +9,7 @@ def mae(new_data, predictions_sarimax):
 def mae_repeated_last_observation_baseline(new_data):
 
     actual_values = new_data['unmatched_callers']
-    baseline_predictions = actual_values.shift(1).bfill().tolist()
+    baseline_predictions = actual_values.shift(1).ffill().tolist()  
     mae_baseline = mean_absolute_error(actual_values[1:], baseline_predictions[1:])
     
     return mae_baseline
@@ -27,7 +27,7 @@ def mae_comparison(new_data, predictions_sarimax):
     return {'mae_result': mae_result}
 
 if __name__ == '__main__':
-    x = mae_comparison(get_results()['predictions'])['mae_result']['mae_comparison']
+    x = mae_comparison(get_new_data(), get_results()['predictions'])
     print(x)
     
 
