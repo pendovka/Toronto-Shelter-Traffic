@@ -1,7 +1,6 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from celery import Celery
-from celery.schedules import crontab
 from output import get_predictions
 from redis import Redis 
 import os
@@ -22,8 +21,8 @@ celery.conf.update(
     task_track_started=True,
     beat_schedule={
         'schedule_print_predictions': {  # Name of the periodic task
-            'task': 'main.print_predictions',  
-            'schedule': crontab(hour='*/12'),  # Schedule task to run every 12 hours
+            'task': 'main.print_predictions',
+            'schedule': 60.0,  # Every 60 seconds
         },
     }
 )
@@ -38,7 +37,7 @@ def index():
     return 'hi'
 
 @celery.task     
-def print_predictions():
+def get_predictions_task():
     predictions = get_predictions()
     return predictions 
 
@@ -49,10 +48,10 @@ def route_get_predictions():
     current_task_id = r.get("current_task_id")
     
     if not current_task_id:
-        task = print_predictions.apply_async(None, expires=60*60*7)
+        task = get_predictions_task.apply_async(None, expires=60*60*7)
         r.set("current_task_id", task.id, ex = 6*60*60)
 
-    current_task = print_predictions.AsyncResult(r.get('current_task_id'))
+    current_task = get_predictions_task.AsyncResult(r.get('current_task_id'))
 
     if current_task.status == 'SUCCESS':
         r.set('last_completed_task_id', current_task.id)
@@ -64,7 +63,7 @@ def route_get_predictions():
     last_completed_task_id = r.get("last_completed_task_id")
 
     if last_completed_task_id:
-        task = print_predictions.AsyncResult(last_completed_task_id)
+        task = get_predictions_task.AsyncResult(last_completed_task_id)
 
         if task.status == 'SUCCESS':
             return jsonify({
