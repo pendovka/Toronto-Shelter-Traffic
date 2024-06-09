@@ -2,6 +2,7 @@ import json
 from flask import Flask, jsonify
 from flask_cors import CORS
 from celery import Celery
+from celery.schedules import crontab
 from output import get_predictions
 from redis import Redis 
 import os
@@ -23,7 +24,7 @@ celery.conf.update(
     beat_schedule={
         'schedule_print_predictions': {  # Name of the periodic task
             'task': 'main.print_predictions',
-            'schedule': 60*60*12,  # Every 12 hours
+            'schedule': crontab(day_of_month='17'),
         },
     }
 )
