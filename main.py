@@ -22,7 +22,7 @@ celery.conf.update(
     beat_schedule={
         'schedule_print_predictions': {  # Name of the periodic task
             'task': 'main.print_predictions',
-            'schedule': 60.0,  # Every 60 seconds
+            'schedule': 60*10,  
         },
     }
 )
@@ -36,9 +36,11 @@ r = Redis(
 def index():
     return 'hi'
 
-@celery.task     
-def get_predictions_task():
+@celery.task(bind=True)    
+def get_predictions_task(self):
+
     predictions = get_predictions()
+    r.set("current_task_id", self.request.id)
     return predictions 
 
 
@@ -48,28 +50,27 @@ def route_get_predictions():
     current_task_id = r.get("current_task_id")
     
     if not current_task_id:
-        task = get_predictions_task.apply_async(None, expires=60*60*7)
-        r.set("current_task_id", task.id, ex = 6*60*60)
+        get_predictions_task.apply_async(None, expires=60*60*7)
+        return jsonify({'result': None, 'status': 'PENDING'}), 202
 
-    current_task = get_predictions_task.AsyncResult(r.get('current_task_id'))
+    current_task = get_predictions_task.AsyncResult(current_task_id)
 
     if current_task.status == 'SUCCESS':
-        r.set('last_completed_task_id', current_task.id)
+        r.set('last_completed_task_result', current_task.result)
+        r.set('last_completed_task_date', current_task.date_done)
 
     elif current_task.status == 'FAILURE':
         r.delete("current_task_id")
         return jsonify({'result': None}), 500
         
-    last_completed_task_id = r.get("last_completed_task_id")
+    last_completed_task_result = r.get("last_completed_task_result")
 
-    if last_completed_task_id:
-        task = get_predictions_task.AsyncResult(last_completed_task_id)
+    if last_completed_task_result:
 
-        if task.status == 'SUCCESS':
-            return jsonify({
-                'result': task.result,
-                'completed_on': task.date_done  
-            }), 200
+        return jsonify({
+            'result': last_completed_task_result,
+            'completed_on': r.get("last_completed_task_date") 
+        }), 200
             
     return jsonify({'result': None, 'status': 'PENDING'}), 202
 
