@@ -20,3 +20,6 @@ def get_calls():
 
     return calls
 
+if __name__ == '__main__':
+    x = get_calls()
+    print(x)

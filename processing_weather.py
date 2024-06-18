@@ -21,3 +21,6 @@ def get_weather():
 
         return None
 
+if __name__ == '__main__':
+    x = get_weather()
+    print(x)

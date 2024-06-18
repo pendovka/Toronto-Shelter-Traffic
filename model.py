@@ -47,5 +47,5 @@ def get_results():
 
 
 if __name__ == '__main__':
-    x = get_results() # check data type of predictions
-    print(x['predictions'])
+    x = get_results() 
+    print(x)

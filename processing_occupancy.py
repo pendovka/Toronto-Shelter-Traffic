@@ -37,3 +37,7 @@ def get_occupancy():
     occupancy = concatenated_occupancy.drop(columns  = ['occupancy_rate'])
     
     return occupancy
+
+if __name__ == '__main__':
+    x = get_occupancy()
+    print(x)
