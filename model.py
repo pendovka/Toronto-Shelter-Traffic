@@ -37,7 +37,6 @@ def get_results():
         print(f'*** CALCULATED {t+1}/{len(new_data)} ROWS ***') 
 
     date_strings = new_data.index[:len(predictions_sarimax)].strftime('%Y-%m-%d').tolist()
-
     
     return {
         'predictions': predictions_sarimax,
@@ -46,3 +45,7 @@ def get_results():
         'new_data': new_data
     }
 
+
+if __name__ == '__main__':
+    x = get_results() # check data type of predictions
+    print(x['predictions'])
