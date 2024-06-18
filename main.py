@@ -15,7 +15,7 @@ CORS(app, send_wildcard=True)
 
 celery = Celery(
     __name__,
-    broker=f"redis://default:{password}@redis-11824.c325.us-east-1-4.ec2.redns.redis-cloud.com:11824",
+    broker=f"redis://default:{password}@redis-11824.c325.us-east-1-4.ec2.redns.redis-cloud.com:11824", 
     backend=f"redis://default:{password}@redis-11824.c325.us-east-1-4.ec2.redns.redis-cloud.com:11824"
 )
 
@@ -24,7 +24,8 @@ celery.conf.update(
     beat_schedule={
         'schedule_print_predictions': {  # Name of the periodic task
             'task': 'main.print_predictions',
-            'schedule': crontab(minute='*/1')  # Every minute,
+            'schedule': crontab(minute='*/1'),
+
         },
     }
 )
