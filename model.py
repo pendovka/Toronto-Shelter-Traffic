@@ -39,10 +39,10 @@ def get_results():
     date_strings = new_data.index[:len(predictions_sarimax)].strftime('%Y-%m-%d').tolist()
     
     return {
-        'predictions': predictions_sarimax,
-        'actual_values': actual_values,
-        'dates': date_strings,
-        'new_data': new_data
+        'predictions': predictions_sarimax[:-1],
+        'actual_values': actual_values[:-1],
+        'dates': date_strings[:-1],
+        'new_data': new_data[:-1]
     }
 
 
