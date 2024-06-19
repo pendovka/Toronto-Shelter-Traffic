@@ -4,7 +4,7 @@ from baseline_comparison import mae_comparison
 def get_predictions():
 
     result = get_results()
-    comparison = mae_comparison(result['new_data'],result['predictions'])['mae_result']
+    comparison = mae_comparison(result['actual_values'],result['predictions'])['mae_result']
 
     return {
         'predictions': result['predictions'],
