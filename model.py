@@ -12,8 +12,8 @@ def get_results():
     new_data_y = new_data.unmatched_callers
     new_data_exog = new_data[current_features]
 
-    history_endog = load('old_unmatched.joblib')[-30:]
-    history_exog = load('old_exog.joblib')[-30:]
+    history_endog = new_data_y[:7].tolist()
+    history_exog = new_data_exog[:7].values.tolist()
 
     predictions_sarimax = []
     actual_values = []
@@ -39,10 +39,10 @@ def get_results():
     date_strings = new_data.index[:len(predictions_sarimax)].strftime('%Y-%m-%d').tolist()
     
     return {
-        'predictions': predictions_sarimax[:-1],
-        'actual_values': actual_values[:-1],
-        'dates': date_strings[:-1],
-        'new_data': new_data[:-1]
+        'predictions': predictions_sarimax[7:-1],
+        'actual_values': actual_values[7:-1],
+        'dates': date_strings[7:-1],
+        'new_data': new_data[7:-1]
     }
 
 
