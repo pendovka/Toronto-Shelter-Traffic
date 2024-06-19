@@ -27,7 +27,8 @@ def mae_comparison(new_data, predictions_sarimax):
     return {'mae_result': mae_result}
 
 if __name__ == '__main__':
-    x = mae_comparison(get_new_data(), get_results()['predictions'])
+    x = mae_comparison(get_new_data()[:-1], get_results()['predictions'])
     print(x)
+
     
 
