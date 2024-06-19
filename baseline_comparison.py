@@ -4,7 +4,7 @@ from model import get_results
 
 def mae(new_data, predictions_sarimax):
 
-    return mean_absolute_error(new_data['unmatched_callers'][14:-1], predictions_sarimax)
+    return mean_absolute_error(new_data['unmatched_callers'][14:], predictions_sarimax)
 
 def mae_repeated_last_observation_baseline(new_data):
 
