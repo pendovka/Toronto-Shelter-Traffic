@@ -12,8 +12,8 @@ def get_results():
     new_data_y = new_data.unmatched_callers
     new_data_exog = new_data[current_features]
 
-    history_endog = load('old_unmatched.joblib')
-    history_exog = load('old_exog.joblib')
+    history_endog = load('old_unmatched.joblib')[-30:]
+    history_exog = load('old_exog.joblib')[-30:]
 
     predictions_sarimax = []
     actual_values = []
@@ -35,8 +35,7 @@ def get_results():
         history_exog.append(next_exog[0].tolist()) 
 
         print(f'*** CALCULATED {t+1}/{len(new_data)} ROWS ***') 
-        
-
+    
     date_strings = new_data.index[:len(predictions_sarimax)].strftime('%Y-%m-%d').tolist()
     
     return {
