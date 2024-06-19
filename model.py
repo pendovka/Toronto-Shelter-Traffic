@@ -36,17 +36,18 @@ def get_results():
 
         print(f'*** CALCULATED {t+1}/{len(new_data)} ROWS ***') 
     
-    date_strings = new_data.index[:len(predictions_sarimax)].strftime('%Y-%m-%d').tolist()
+    date_strings = new_data.index[14:].strftime('%Y-%m-%d').tolist()
     
     return {
         'predictions': predictions_sarimax[:-1],
         'actual_values': actual_values[:-1],
-        'dates': date_strings[8:-1],
+        'dates': date_strings[:-1],
         'new_data': new_data[:-1]
     }
 
 
 if __name__ == '__main__':
     x = get_results() 
-    print(x['predictions'])
-    print(x['actual_values'])
+    print(len(x['predictions']))
+    print(len(x['dates']))
+    print(len(x['actual_values']))
