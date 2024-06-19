@@ -12,8 +12,6 @@ def get_occupancy():
 
     occupancy2024['OCCUPANCY_DATE'] = pd.to_datetime(occupancy2024['OCCUPANCY_DATE'])
 
-    occupancy2024['OCCUPANCY_DATE'] = pd.to_datetime(occupancy2024['OCCUPANCY_DATE'])
-
     occupancy2024.sort_values(by='OCCUPANCY_DATE', inplace=True)
     occupancy2024.set_index('OCCUPANCY_DATE', inplace=True)
     occupancy2024 = occupancy2024.rename_axis('Date')
