@@ -12,13 +12,13 @@ def get_results():
     new_data_y = new_data.unmatched_callers
     new_data_exog = new_data[current_features]
 
-    history_endog = new_data_y[:21].tolist()
-    history_exog = new_data_exog[:21].values.tolist()
+    history_endog = new_data_y[:14].tolist()
+    history_exog = new_data_exog[:14].values.tolist()
 
     predictions_sarimax = []
     actual_values = []
 
-    for t in range(21, len(new_data)):
+    for t in range(14, len(new_data)):
 
         model = SARIMAX(history_endog, exog=history_exog,
                         order=(1, 1, 1),  
@@ -41,7 +41,7 @@ def get_results():
     return {
         'predictions': predictions_sarimax[:-1],
         'actual_values': actual_values[:-1],
-        'dates': date_strings[7:-1],
+        'dates': date_strings[8:-1],
         'new_data': new_data[:-1]
     }
 
