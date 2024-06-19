@@ -35,6 +35,7 @@ def get_results():
         history_exog.append(next_exog[0].tolist()) 
 
         print(f'*** CALCULATED {t+1}/{len(new_data)} ROWS ***') 
+        
 
     date_strings = new_data.index[:len(predictions_sarimax)].strftime('%Y-%m-%d').tolist()
     
