@@ -53,9 +53,10 @@ def route_get_predictions():
     current_task_id = r.get("current_task_id")
     
     if not current_task_id:
-        get_predictions_task.apply_async(None, expires=60*60*7)
+        task = get_predictions_task.apply_async(None, expires=60*60*7)
+        r.set('current_task_id', task.id)
         return jsonify({'result': None, 'status': 'PENDING'}), 202
-
+    
     current_task = get_predictions_task.AsyncResult(current_task_id)
 
     if current_task.status == 'SUCCESS':
