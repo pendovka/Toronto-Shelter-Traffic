@@ -48,6 +48,4 @@ def get_results():
 
 if __name__ == '__main__':
     x = get_results() 
-    print(len(x['predictions']))
-    print(len(x['dates']))
-    print(len(x['actual_values']))
+    print(x)
