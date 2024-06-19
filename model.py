@@ -27,7 +27,7 @@ def get_results():
         model_fit = model.fit(disp = 0)
         next_exog = new_data_exog.iloc[t:t+1].values  
         output = model_fit.forecast(exog=next_exog)
-        yhat = round(float(output[0]), 2)
+        yhat = round(float(output[0]))
         predictions_sarimax.append(yhat)
         obs = int(new_data_y.iloc[t])
         history_endog.append(obs)
