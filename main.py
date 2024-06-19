@@ -52,24 +52,26 @@ def route_get_predictions():
 
     current_task_id = r.get("current_task_id")
     
+    # If there's no current task, start a new one
     if not current_task_id:
-        get_predictions_task.apply_async(None, expires=60*60*7)
-        return jsonify({'result': None, 'status': 'PENDING'}), 202
+        current_task = get_predictions_task.apply_async(None, expires=60*60*7)
+        r.set("current_task_id", current_task.id)
+    else:
+        current_task = get_predictions_task.AsyncResult(current_task_id)
 
-    current_task = get_predictions_task.AsyncResult(current_task_id)
-
+    # If the current task has completed, update the last completed task result and start a new task
     if current_task.status == 'SUCCESS':
         r.set('last_completed_task_result', json.dumps(current_task.result))
         r.set('last_completed_task_date', current_task.date_done.timestamp())
-
+        current_task = get_predictions_task.apply_async(None, expires=60*60*7)
+        r.set("current_task_id", current_task.id)
     elif current_task.status == 'FAILURE':
         r.delete("current_task_id")
-        return jsonify({'result': None}), 500
-        
+
     last_completed_task_result = r.get("last_completed_task_result")
 
+    # If there's a last completed task result, return it immediately
     if last_completed_task_result:
-
         return jsonify({ 
             'result': json.loads(last_completed_task_result.decode('utf-8')),
             'completed_on': float(r.get("last_completed_task_date"))
