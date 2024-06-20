@@ -24,8 +24,7 @@ celery.conf.update(
     beat_schedule={
         'schedule_print_predictions': {  # Name of the periodic task
             'task': 'main.get_predictions_task',
-            'schedule': crontab(day_of_month='20'),
-        },
+'schedule': crontab(day_of_month='1,15', hour='14', minute='30'),        },
     }
 )
 
