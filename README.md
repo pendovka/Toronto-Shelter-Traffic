@@ -4,6 +4,7 @@ To see the chart that compares predicted vs actual values, please see the [websi
 
 To explore the step-by-step project and model development, please check out the [Jupyter Notebook](https://github.com/pendovka/Toronto-Shelter-Traffic/blob/main/Shelter-Demand-Predictor.ipynb).
 
+
 ## Data Used
 
 - [Toronto Daily Weather Report](https://climate.weather.gc.ca/climate_data/daily_data_e.html?StationID=51459/) 
