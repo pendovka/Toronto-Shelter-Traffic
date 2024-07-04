@@ -1,6 +1,7 @@
 ## Instructions
 
 To see the chart that compares predicted vs actual values, please see the [website](https://demand-predictor.netlify.app/).
+
 To explore the step-by-step project and model development, please check out the [Jupyter Notebook](https://github.com/pendovka/Toronto-Shelter-Traffic/blob/main/Shelter-Demand-Predictor.ipynb).
 
 ## Data Used
