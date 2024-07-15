@@ -22,9 +22,10 @@ celery = Celery(
 celery.conf.update(
     task_track_started=True,
     beat_schedule={
-        'schedule_print_predictions': {  # Name of the periodic task
+        'schedule_print_predictions': {
             'task': 'main.get_predictions_task',
-            'schedule': crontab(minute=0),        },
+            'schedule': crontab(minute=0, hour=0, day_of_month='1,15'),  # Runs at midnight on the 1st and 15th of each month
+        },
     }
 )
 
