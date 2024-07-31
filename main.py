@@ -24,7 +24,7 @@ celery.conf.update(
     beat_schedule={
         'schedule_print_predictions': {
             'task': 'main.get_predictions_task',
-            'schedule': crontab(minute=0, hour='*/1'),  # Runs every hour
+            'schedule': crontab(minute=0, hour='*/12'),  # Runs every 12 hours
         },
     }
 )
